@@ -10,18 +10,13 @@ from dotenv import load_dotenv
 from processing import weekly_product,daily_product, weekly_category
 from tweets import tweet_product, tweet_category
 
-DB_DIR = '../mercadona-scraper'
 
 # ENVIRONMENT VARIABLES
 logger = logging.getLogger()
 
-def create_client(env_dir = None):
+def initiate_client(env_dir = '.env'):
     
-    if env_dir:
-        load_dotenv(env_dir)
-
-    else: 
-        load_dotenv()
+    load_dotenv(env_dir)
 
     # ----- SECRETS ----------
 
@@ -38,13 +33,17 @@ def create_client(env_dir = None):
 
     # --------------------------
 
+    # ------ DATABASE -----------
+    DB_DIR = os.getenv('DB_DIR')
+
+
     # CLIENT
     client = tweepy.Client(bearer_token=BEARER_TOKEN, access_token=OAUTH_TOKEN, access_token_secret=OAUTH_TOKEN_SECRET, consumer_key=API_KEY, consumer_secret=API_SECRET)
 
     # Report progress
     logger.info("Client created successfully")
 
-    return client
+    return client, DB_DIR
 
 
 def daily_tweet(client, db_dir):
@@ -58,7 +57,7 @@ def daily_tweet(client, db_dir):
     time.sleep(90)
 
     # TWEET TOP
-    tweet_product(client, products=top)
+    tweet_product(client, products=top, top=True)
 
     print('Successfully tweeted daily information')
 
@@ -96,7 +95,7 @@ def weekly_tweet(client,db_dir):
 if __name__ == '__main__':
     
     # Connect to twitter client
-    client = create_client()
+    client, DB_DIR = initiate_client()
 
     schedule.every().day.at("12:00").do(daily_tweet, client=client, db_dir=DB_DIR)
     schedule.every().sunday.at("18:00").do(weekly_tweet, client=client, db_dir=DB_DIR)
@@ -104,7 +103,8 @@ if __name__ == '__main__':
     while True:
         print("Checking for new jobs to run...")
         schedule.run_pending()
-        time.sleep(600)
+        print("Run completed. Going to sleep")
+        time.sleep(120)
         print("----------------")
 
 

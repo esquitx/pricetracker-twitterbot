@@ -27,24 +27,24 @@ EURO = '\U0001F4B6'
 ARROW = '→'
 NEW = '\U0001F195'
 
+# TODO Update for api v2
+# def like_mentions(client, last_check):
 
-def like_mentions(client, last_check):
-
-    logger.info('Retrieving mentions...')
+#     logger.info('Retrieving mentions...')
     
-    new_check = last_check
-    for tweet in tweepy.Cursor(client.mentions_timeline, since_id=last_check).items():
+#     new_check = last_check
+#     for tweet in tweepy.Cursor(client.mentions_timeline, since_id=last_check).items():
         
-        # Update last checked tweet
-        new_check = max(tweet.id, new_check)
+#         # Update last checked tweet
+#         new_check = max(tweet.id, new_check)
 
-        if not tweet.favorited:
-            try:
-                tweet.favorite()
-            except Exception as e:
-                logger.exception("Error encountered when liking tweet", exc_info=True)
+#         if not tweet.favorited:
+#             try:
+#                 tweet.favorite()
+#             except Exception as e:
+#                 logger.exception("Error encountered when liking tweet", exc_info=True)
 
-    return new_check
+#     return new_check
 
 
 def tweet_product(client, products, top=True, daily=True):

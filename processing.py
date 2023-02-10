@@ -6,8 +6,6 @@ import pandas as pd
 
 logger = logging.getLogger()
 
-DB_DIR = '../mercadona-scraper'
-
 def daily_product(db_dir):
     '''
     '''
