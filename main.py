@@ -41,7 +41,7 @@ def initiate_client(env_dir = '.env'):
     client = tweepy.Client(bearer_token=BEARER_TOKEN, access_token=OAUTH_TOKEN, access_token_secret=OAUTH_TOKEN_SECRET, consumer_key=API_KEY, consumer_secret=API_SECRET)
 
     # Report progress
-    logger.info("Client created successfully")
+    print("Client created successfully")
 
     return client, DB_DIR
 
