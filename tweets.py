@@ -46,6 +46,7 @@ NEW = '\U0001F195'
 
 #     return new_check
 
+hashtags_body = '#mercadona #precios #inflacion #trackcendado'
 
 def tweet_product(client, products, top=True, daily=True):
     
@@ -76,6 +77,8 @@ def tweet_product(client, products, top=True, daily=True):
 
     fifth_body = format_product_tweet(4, product=products[4], top=top )
     fifth = client.create_tweet(text=fifth_body, in_reply_to_tweet_id=fourth.data['id'])
+
+    hashtags = client.create_tweet(text=hashtags_body, in_reply_to_tweet_id=fifth.data['id'])
 
     return 'Success!'
     
@@ -122,6 +125,8 @@ def tweet_category(client, categories, top=True):
 
     fifth_body = format_category_tweet(4, category=categories[4], top=top)
     fifth = client.create_tweet(text=fifth_body, in_reply_to_tweet_id=fourth.data['id'])
+
+    hashtags = client.create_tweet(text=hashtags_body, in_reply_to_tweet_id=fifth.data['id'])
 
     return 'Success!'
 

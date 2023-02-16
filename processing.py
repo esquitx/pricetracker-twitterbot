@@ -39,7 +39,7 @@ def daily_product(db_dir):
 
     # extract top 5 price changes in both directions
     df_top = merge.head(5)
-    df_bot = merge.tail(5)
+    df_bot = merge.tail(5)[::-1]
 
     # convert to dictionary
     top = df_top.to_dict('records')
